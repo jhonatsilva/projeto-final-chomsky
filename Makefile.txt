@@ -1,0 +1,12 @@
+CC=gcc
+
+CFLAGS=-Wall
+
+all:
+	$(CC) $(CFLAGS) src/main.c src/lr.c src/llc.c src/r.c -o validador
+
+run:
+	./validador
+
+clean:
+	rm -f validador
