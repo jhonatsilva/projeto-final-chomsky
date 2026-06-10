@@ -4,32 +4,36 @@
 
 int validarBalanceamento(const char *expr)
 {
-    char pilha[MAX];
+    char pilha[100];
     int topo = -1;
 
     for(int i = 0; expr[i] != '\0'; i++)
     {
-        char c = expr[i];
-
-        if(c == '(' || c == '[' || c == '{')
+        switch(expr[i])
         {
-            pilha[++topo] = c;
-        }
-        else if(c == ')' || c == ']' || c == '}')
-        {
-            if(topo < 0)
-                return 0;
+            case '(':
+            case '[':
+            case '{':
+                pilha[++topo] = expr[i];
+                break;
 
-            char abertura = pilha[topo--];
+            case ')':
+                if(topo < 0 || pilha[topo] != '(')
+                    return 0;
+                topo--;
+                break;
 
-            if(c == ')' && abertura != '(')
-                return 0;
+            case ']':
+                if(topo < 0 || pilha[topo] != '[')
+                    return 0;
+                topo--;
+                break;
 
-            if(c == ']' && abertura != '[')
-                return 0;
-
-            if(c == '}' && abertura != '{')
-                return 0;
+            case '}':
+                if(topo < 0 || pilha[topo] != '{')
+                    return 0;
+                topo--;
+                break;
         }
     }
 
